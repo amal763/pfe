@@ -1,0 +1,16 @@
+# Build stage (if using multi-stage)
+FROM eclipse-temurin:17-jdk-jammy AS build
+WORKDIR /workspace/app
+COPY . .
+RUN ./mvnw clean package -DskipTests
+
+# Runtime stage
+FROM eclipse-temurin:17-jre-jammy
+WORKDIR /app
+COPY --from=build /workspace/app/target/*.jar app.jar
+
+# Expose the correct port (8081)
+EXPOSE 8081
+
+# Run the app
+ENTRYPOINT ["java", "-jar", "app.jar"]

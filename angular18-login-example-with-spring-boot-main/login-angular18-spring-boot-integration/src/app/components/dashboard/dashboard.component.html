@@ -1,0 +1,123 @@
+<div class="text-end mb-4">
+  <img src="https://i.postimg.cc/mgSsSZy1/cnss.png"
+       alt="CNSS Logo"
+       class="img-fluid"
+       style="height: 180px; width: auto;">
+</div>
+
+<div class="container mt-4">
+  <!-- Header with Logo -->
+  <header class="d-flex justify-content-between align-items-center mb-4 p-3 bg-light rounded">
+    <h4 class="text-primary mb-0 fw-bold">
+      <i class="bi bi-database me-2"></i>Récupération de Données
+    </h4>
+    <span class="badge bg-primary">Version 1.0</span>
+  </header>
+
+  <!-- Data Retrieval Card -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-4">
+      <form (ngSubmit)="fetchData()" #dataForm="ngForm">
+        <!-- Input for URL -->
+        <div class="mb-4">
+          <label for="apiUrl" class="form-label fw-bold">URL de l'API</label>
+          <input
+            type="url"
+            class="form-control form-control-lg green-border-input"
+            id="apiUrl"
+            placeholder="https://exemple.com/api/data"
+            [(ngModel)]="apiUrl"
+            name="apiUrl"
+            required
+            #urlInput="ngModel"
+          />
+          <div *ngIf="urlInput.invalid && (urlInput.dirty || urlInput.touched)" class="text-danger small mt-2">
+            <i class="bi bi-exclamation-circle me-1"></i>URL est requis
+          </div>
+          <div class="form-text mt-2">Entrez l'URL complète du point de terminaison API</div>
+        </div>
+
+        <!-- Input for Table Name -->
+        <div class="mb-4">
+          <label for="tableName" class="form-label fw-bold">Nom de la table</label>
+          <input
+            type="text"
+            class="form-control form-control-lg green-border-input"
+            id="tableName"
+            placeholder="Nom de la table"
+            [(ngModel)]="tableName"
+            name="tableName"
+            required
+            #tableInput="ngModel"
+          />
+          <div *ngIf="tableInput.invalid && (tableInput.dirty || tableInput.touched)" class="text-danger small mt-2">
+            <i class="bi bi-exclamation-circle me-1"></i>Nom de table est requis
+          </div>
+        </div>
+
+        <!-- Button to fetch data -->
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-success btn-lg py-3" [disabled]="!dataForm.form.valid || isLoading">
+            <span *ngIf="!isLoading">
+              <i class="bi bi-cloud-download me-2"></i> Récupérer les Données
+            </span>
+            <span *ngIf="isLoading">
+              <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              Chargement...
+            </span>
+          </button>
+        </div>
+      </form>
+
+      <!-- Error Message Display -->
+      <div *ngIf="errorMessage" class="alert alert-danger mt-4 animate__animated animate__fadeIn">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        {{errorMessage}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Debug Information -->
+  <div class="alert alert-info mt-2 small">
+    <div><strong>Debug Information:</strong></div>
+    <div>API URL: <code>{{apiUrl || 'Non fourni'}}</code></div>
+    <div>Table Name: <code>{{tableName || 'Non fourni'}}</code></div>
+    <div>Loading State: <span [ngClass]="{'text-success': !isLoading, 'text-warning': isLoading}">
+      {{isLoading ? 'En cours...' : 'Prêt'}}
+    </span></div>
+    <div>Form Valid: <span [ngClass]="{'text-success': dataForm.form.valid, 'text-danger': !dataForm.form.valid}">
+      {{dataForm.form.valid ? 'Valide' : 'Invalide'}}
+    </span></div>
+  </div>
+
+
+  <!-- Compact Table to display data -->
+  <section *ngIf="showTable" class="mt-4 animate__animated animate__fadeIn">
+    <div class="d-flex justify-content-between align-items-center mb-3 bg-light p-2 rounded">
+      <h5 class="text-primary mb-0 fw-bold">
+        <i class="bi bi-table me-2"></i>Données récupérées
+      </h5>
+      <span class="badge bg-secondary">{{tableData.length}} enregistrements</span>
+    </div>
+
+    <div class="table-responsive border rounded">
+      <table class="table table-sm table-hover mb-0">
+        <thead class="table-primary">
+        <tr>
+          <th *ngFor="let column of tableColumns" class="py-2 px-3 text-nowrap">{{ column }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of tableData; let i = index" [class.table-light]="i % 2 === 0">
+          <td *ngFor="let column of tableColumns" class="py-2 px-3 text-truncate" style="max-width: 200px;">
+            {{ row[column] }}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="tableData.length === 0" class="alert alert-info mt-3">
+      <i class="bi bi-info-circle me-2"></i>Aucune donnée disponible pour afficher.
+    </div>
+  </section>
+</div>

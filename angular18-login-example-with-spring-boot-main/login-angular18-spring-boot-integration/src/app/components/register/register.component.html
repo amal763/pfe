@@ -1,0 +1,82 @@
+<div class="parent">
+  <header class="header">
+    <div class="logo">
+      <a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/mgSsSZy1/cnss.png' border='0' alt='cnss'/></a>
+    </div>
+  </header>
+
+  <div class="signup-card">
+    <h1>
+      @if (msg) {
+        {{msg}}
+      }
+    </h1>
+
+    <div class="card-title">
+      <h1>Create Account</h1>
+      <span>Already have an account? <a routerLink="/login">Sign In</a></span>
+    </div>
+
+    <form class="form-group" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <!-- Name Field -->
+      <input type="text" name="name" placeholder="Name" formControlName="name">
+      <div class="text-danger">
+        @if (signupForm.controls['name'].touched && signupForm.controls['name'].errors?.['required']) {
+          <span>Name is required</span>
+        }
+      </div>
+
+      <!-- Email Field (replacing username) -->
+      <input type="email" name="email" placeholder="Email" formControlName="email">
+      <div class="text-danger">
+        @if (signupForm.controls['email'].touched && signupForm.controls['email'].errors?.['required']) {
+          <span>Email is required</span>
+        }
+        @if (signupForm.controls['email'].touched && signupForm.controls['email'].errors?.['email']) {
+          <span>Please enter a valid email</span>
+        }
+      </div>
+
+      <!-- Password Field -->
+      <input type="password" name="password" placeholder="Password" formControlName="password">
+      <div class="text-danger">
+        @if (signupForm.controls['password'].touched && signupForm.controls['password'].errors?.['required']) {
+          <span>Password is required</span>
+        }
+        @if (signupForm.controls['password'].touched && signupForm.controls['password'].errors?.['minlength']) {
+          <span>Password must be at least 8 characters</span>
+        }
+      </div>
+
+      <!-- Address Field -->
+      <input type="text" name="address" placeholder="Address" formControlName="address">
+      <div class="text-danger">
+        @if (signupForm.controls['address'].touched && signupForm.controls['address'].errors?.['required']) {
+          <span>Address is required</span>
+        }
+      </div>
+
+      <!-- Mobile Number Field -->
+      <input type="text" name="mobileno" placeholder="Mobile No" formControlName="mobileno">
+      <div class="text-danger">
+        @if (signupForm.controls['mobileno'].touched && signupForm.controls['mobileno'].errors?.['required']) {
+          <span>Mobile number is required</span>
+        }
+      </div>
+
+      <!-- Age Field -->
+      <input type="text" name="age" placeholder="Age" formControlName="age">
+      <div class="text-danger">
+        @if (signupForm.controls['age'].touched && signupForm.controls['age'].errors?.['required']) {
+          <span>Age is required</span>
+        }
+      </div>
+
+      <input type="submit" [disabled]="!signupForm.valid" value="Signup">
+    </form>
+
+    <div class="card-terms">
+      <input type="checkbox"> <span>I have read and agree to the <a href="">Terms of Service</a></span>
+    </div>
+  </div>
+</div>

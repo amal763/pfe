@@ -1,0 +1,65 @@
+/* Replace your current @import with this */
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+/* Enhanced green border inputs */
+.green-border-input {
+  border: 2px solid #198754 !important;
+  border-radius: 8px !important;
+  padding: 12px 15px !important;
+  font-size: 16px !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Focus state */
+.green-border-input:focus {
+  border-color: #198754 !important;
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25) !important;
+}
+
+/* Valid state (when input is filled correctly) */
+.green-border-input.ng-valid {
+  border-color: #198754 !important;
+}
+
+/* Invalid state */
+.green-border-input.ng-invalid.ng-touched {
+  border-color: #dc3545 !important;
+}
+
+/* Card styling */
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Form label styling */
+.form-label {
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* Button styling */
+.btn-lg {
+  border-radius: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
