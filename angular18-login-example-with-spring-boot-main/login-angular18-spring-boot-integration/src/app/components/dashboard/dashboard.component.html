@@ -13,7 +13,52 @@
     </h4>
     <span class="badge bg-primary">Version 1.0</span>
   </header>
+  <!-- hethya mta3 buttons-->
+  <div class="mb-4">
+    <label class="form-label fw-bold">Charger des données préconfigurées :</label>
+    <div class="d-flex flex-wrap gap-3">
+      <button type="button"
+              class="btn btn-outline-primary"
+              (click)="loadPreset('http://10.222.6.3/CNSS/exo_startup.php?date=01012015', 'exo_startup')">
+        <i class="bi bi-cloud-arrow-down me-2"></i> Charger EXO Startup
+      </button>
 
+
+      <button type="button"
+              class="btn btn-outline-primary"
+              (click)="loadPreset('http://10.222.6.3/CNSS/exoneration.php?date=01052025', 'exoneration')">
+        <i class="bi bi-cloud-arrow-down me-2"></i> Charger Exoneration
+      </button>
+
+
+      <button type="button"
+              class="btn btn-outline-primary"
+              (click)="loadPreset('http://10.222.6.3/CNSS/beneficiaire_dt.php?date={date}&amp;programme={programme}', 'beneficiaire_dt')">
+        <i class="bi bi-cloud-arrow-down me-2"></i> Charger Beneficiaire_dt
+      </button>
+
+      <button type="button"
+              class="btn btn-outline-primary"
+              (click)="loadPreset('http://10.222.6.3/CNSS/benef_cin.php?cin={cin}&amp;date={date}', 'benef_cin')">
+        <i class="bi bi-cloud-arrow-down me-2"></i> Charger Benef_cin
+      </button>
+
+      <button type="button"
+              class="btn btn-outline-primary"
+              (click)="loadPreset('http://10.222.6.3/CNSS/pointage_cin.php?cin={cin}', 'pointage_cin')">
+        <i class="bi bi-cloud-arrow-down me-2"></i> Charger Pointage_cin
+      </button>
+
+
+      <button type="button"
+              class="btn btn-outline-primary"
+              (click)="loadPreset('http://10.222.6.3/CNSS/etab_prog.php?numaffil={numaffil}&amp;cle={cle}&amp;dt_min={dt_mi\n'+
+'n}&amp;dt_max={dt_max}', 'etab_prog')">
+        <i class="bi bi-cloud-arrow-down me-2"></i> Charger Etab_prog
+      </button>
+      <!-- Add more buttons here if needed -->
+    </div>
+  </div>
   <!-- Data Retrieval Card -->
   <div class="card border-0 shadow-sm mb-4">
     <div class="card-body p-4">
@@ -89,6 +134,13 @@
       {{dataForm.form.valid ? 'Valide' : 'Invalide'}}
     </span></div>
   </div>
+
+  <!-- mt3 buttons -->
+  <div class="alert alert-secondary mt-3">
+    <i class="bi bi-database-fill-gear me-2"></i>
+    Données chargées depuis : <strong>{{tableName}}</strong> — <code>{{apiUrl}}</code>
+  </div>
+
 
   <!-- Data Table Section with Enhanced Filtering -->
   <section *ngIf="showTable" class="mt-4 animate__animated animate__fadeIn">

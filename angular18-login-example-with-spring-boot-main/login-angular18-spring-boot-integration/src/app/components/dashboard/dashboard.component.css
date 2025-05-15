@@ -2,77 +2,131 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
+/* === Base Table Styling === */
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px 16px;
   text-align: left;
+  vertical-align: middle;
 }
 
+/* Header styling */
 th {
   background-color: #f4f4f4;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
 }
 
-/* Enhanced green border inputs */
+/* Zebra striping */
+tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* Hover effect on row */
+tbody tr:hover {
+  background-color: #eef5ff;
+}
+
+/* Round first and last cells */
+thead th:first-child,
+tbody td:first-child {
+  border-top-left-radius: 8px;
+}
+thead th:last-child,
+tbody td:last-child {
+  border-top-right-radius: 8px;
+}
+
+/* === Enhanced green border inputs === */
 .green-border-input {
   border: 2px solid #198754 !important;
   border-radius: 8px !important;
-  padding: 12px 15px !important;
-  font-size: 16px !important;
+  padding: 8px 12px !important;
+  font-size: 14px !important;
   transition: all 0.3s ease !important;
 }
-
-/* Focus state */
 .green-border-input:focus {
   border-color: #198754 !important;
   box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25) !important;
 }
-
-/* Valid state (when input is filled correctly) */
 .green-border-input.ng-valid {
   border-color: #198754 !important;
 }
-
-/* Invalid state */
 .green-border-input.ng-invalid.ng-touched {
   border-color: #dc3545 !important;
 }
 
-/* Card styling */
-.card {
-  border-radius: 12px;
-  overflow: hidden;
+/* === Buttons === */
+.btn-success {
+  background-color: #198754 !important;
+  color: #fff !important;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+.btn-success:hover {
+  background-color: #157347 !important;
+  color: #fff !important;
 }
 
-/* Form label styling */
-.form-label {
-  font-size: 16px;
-  margin-bottom: 10px;
-  display: block;
-}
-
-/* Button styling */
 .btn-lg {
   border-radius: 8px;
   font-weight: 500;
   letter-spacing: 0.5px;
+  transition: background-color 0.3s ease;
 }
 
-.table-responsive {
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.btn-sm {
+  padding: 4px 8px;
+  font-size: 13px;
+  transition: background-color 0.3s ease;
 }
 
-.table-sm th, .table-sm td {
-  padding: 8px 12px;
+/* Update Button in Table */
+td .btn-warning {
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background-color: #ffc107;
+  color: #000;
+  border: none;
+  transition: all 0.2s ease;
+}
+td .btn-warning:hover {
+  background-color: #d39e00;
+  color: #fff;
 }
 
-/* Filter controls styling */
+/* Align button center in cell */
+td.text-center {
+  text-align: center !important;
+  vertical-align: middle !important;
+  white-space: nowrap;
+}
+
+/* === Card and Form === */
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.form-label {
+  font-size: 16px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Filter Controls */
 .filter-controls {
   background-color: #f8f9fa;
   padding: 15px;
@@ -98,23 +152,34 @@ th {
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
-/* Spacing between filter rows */
 .filter-controls .row + .row {
   margin-top: 15px;
 }
 
-/* Badge styling */
+/* Badge Styling */
 .badge {
   font-weight: 500;
   letter-spacing: 0.5px;
 }
 
-/* Table row hover effect */
+/* Table enhancements */
+.table-responsive {
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+/* Small cell padding for compact tables */
+.table-sm th, .table-sm td {
+  padding: 8px 12px;
+}
+
+/* Row hover effect */
 .table-hover tbody tr:hover {
   background-color: rgba(13, 110, 253, 0.05);
 }
 
-/* Text truncation for table cells */
+/* Text truncation */
 .text-truncate {
   max-width: 200px;
   white-space: nowrap;
@@ -122,7 +187,7 @@ th {
   text-overflow: ellipsis;
 }
 
-/* Status indicators */
+/* Status indicator */
 .status-indicator {
   display: inline-block;
   width: 10px;
@@ -130,23 +195,43 @@ th {
   border-radius: 50%;
   margin-right: 5px;
 }
-
 .status-active {
   background-color: #198754;
 }
-
 .status-inactive {
   background-color: #dc3545;
 }
 
-/* Responsive adjustments */
+/* Make preset buttons full width */
+.col-md-4 .btn {
+  width: 100%;
+}
+
+/* === Responsive Adjustments === */
 @media (max-width: 768px) {
+  .card-body .row > div {
+    margin-bottom: 15px;
+  }
+
+  .col-md-4 {
+    margin-top: 15px;
+  }
+
   .filter-controls .col-md-4 {
     margin-bottom: 15px;
+  }
+
+  table th, table td {
+    padding: 10px 8px;
   }
 
   .table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+  }
+
+  td .btn-warning {
+    font-size: 13px;
+    padding: 3px 8px;
   }
 }

@@ -186,5 +186,11 @@ export class DashboardComponent {
     console.log('Update clicked for:', row);
     // Implement your update logic here
   }
+  loadPreset(apiUrl: string, tableName: string): void {
+    this.apiUrl = apiUrl;
+    this.tableName = tableName;
+    // ⚠️ No automatic fetch — user must click "Récupérer les Données"
+  }
+
 
 }
