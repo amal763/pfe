@@ -4,7 +4,7 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/angular18-login-example-with-spring-boot-main/login-example/pom.xml" />
+        <option value="$PROJECT_DIR$/login-example/pom.xml" />
       </list>
     </option>
   </component>

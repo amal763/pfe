@@ -90,34 +90,141 @@
     </span></div>
   </div>
 
-
-  <!-- Compact Table to display data -->
+  <!-- Data Table Section with Enhanced Filtering -->
   <section *ngIf="showTable" class="mt-4 animate__animated animate__fadeIn">
     <div class="d-flex justify-content-between align-items-center mb-3 bg-light p-2 rounded">
       <h5 class="text-primary mb-0 fw-bold">
         <i class="bi bi-table me-2"></i>Données récupérées
       </h5>
-      <span class="badge bg-secondary">{{tableData.length}} enregistrements</span>
+      <div>
+        <span class="badge bg-primary me-2">{{tableData.length}} enregistrements</span>
+        <span class="badge bg-secondary">{{filteredData.length}} affichés</span>
+      </div>
     </div>
 
+    <!-- Filter Controls - Updated 3-column layout -->
+    <div class="filter-controls mb-3">
+      <div class="row g-3">
+        <!-- Global search always first -->
+        <div class="col-md-4">
+          <label for="globalFilter" class="form-label">Recherche globale</label>
+          <input
+            type="text"
+            class="form-control"
+            id="globalFilter"
+            placeholder="Rechercher..."
+            [(ngModel)]="globalFilter"
+            (input)="applyFilter()">
+        </div>
+
+        <!-- Column filters in groups of 3 -->
+        <ng-container *ngFor="let column of filterableColumns; let i = index">
+          <div class="col-md-4" *ngIf="i < 2"> <!-- Show first 2 columns with global search -->
+            <label [for]="'filter_' + column" class="form-label">Filtrer par {{column}}</label>
+            <input
+              type="text"
+              class="form-control"
+              [id]="'filter_' + column"
+              [placeholder]="'Filtrer ' + column"
+              [(ngModel)]="columnFilters[column]"
+              (input)="applyFilter()">
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Additional rows for columns beyond the first 3 -->
+      <div class="row g-3 mt-2" *ngIf="filterableColumns.length > 2">
+        <ng-container *ngFor="let column of filterableColumns; let i = index">
+          <div class="col-md-4" *ngIf="i >= 2 && i < 5"> <!-- Show columns 3-5 -->
+            <label [for]="'filter_' + column" class="form-label">Filtrer par {{column}}</label>
+            <input
+              type="text"
+              class="form-control"
+              [id]="'filter_' + column"
+              [placeholder]="'Filtrer ' + column"
+              [(ngModel)]="columnFilters[column]"
+              (input)="applyFilter()">
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Third row if needed -->
+      <div class="row g-3 mt-2" *ngIf="filterableColumns.length > 5">
+        <ng-container *ngFor="let column of filterableColumns; let i = index">
+          <div class="col-md-4" *ngIf="i >= 5"> <!-- Show columns 6+ -->
+            <label [for]="'filter_' + column" class="form-label">Filtrer par {{column}}</label>
+            <input
+              type="text"
+              class="form-control"
+              [id]="'filter_' + column"
+              [placeholder]="'Filtrer ' + column"
+              [(ngModel)]="columnFilters[column]"
+              (input)="applyFilter()">
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Data Table -->
     <div class="table-responsive border rounded">
       <table class="table table-sm table-hover mb-0">
         <thead class="table-primary">
         <tr>
-          <th *ngFor="let column of tableColumns" class="py-2 px-3 text-nowrap">{{ column }}</th>
+          <th *ngFor="let column of tableColumns" class="py-2 px-3 text-nowrap">
+            {{ column }}
+            <button
+              *ngIf="isSortable(column)"
+              class="btn btn-sm btn-link p-0 ms-1"
+              (click)="sortColumn(column)">
+              <i class="bi"
+                 [class.bi-arrow-down]="sortDirection === 'desc' && sortColumnName === column"
+                 [class.bi-arrow-up]="sortDirection === 'asc' && sortColumnName === column"
+                 [class.bi-arrow-down-up]="sortColumnName !== column"></i>
+            </button>
+          </th>
+          <!-- New header column for action -->
+          <th class="py-2 px-3 text-nowrap">Action</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let row of tableData; let i = index" [class.table-light]="i % 2 === 0">
-          <td *ngFor="let column of tableColumns" class="py-2 px-3 text-truncate" style="max-width: 200px;">
+        <tr *ngFor="let row of filteredData; let i = index" [class.table-light]="i % 2 === 0">
+          <td *ngFor="let column of tableColumns" class="py-2 px-3 text-truncate">
+          <span *ngIf="isStatusColumn(column)" class="status-indicator"
+                [class.status-active]="row[column] === 'active'"
+                [class.status-inactive]="row[column] !== 'active'"></span>
             {{ row[column] }}
+          </td>
+          <!-- New cell with Update button -->
+          <td class="py-2 px-3 text-center">
+            <button class="btn btn-sm btn-warning" (click)="onUpdate(row)">
+              <i class="bi bi-pencil-square me-1"></i>Update
+            </button>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
+
+
+    <!-- Empty State Messages -->
+    <div *ngIf="filteredData.length === 0 && tableData.length > 0" class="alert alert-warning mt-3">
+      <i class="bi bi-exclamation-triangle me-2"></i>Aucune donnée ne correspond à vos critères de filtrage.
+    </div>
+
     <div *ngIf="tableData.length === 0" class="alert alert-info mt-3">
       <i class="bi bi-info-circle me-2"></i>Aucune donnée disponible pour afficher.
+    </div>
+
+    <!-- Table Footer -->
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <div class="text-muted small">
+        Affichage de {{filteredData.length}} sur {{tableData.length}} éléments
+      </div>
+      <button *ngIf="filteredData.length !== tableData.length"
+              class="btn btn-sm btn-outline-secondary"
+              (click)="resetFilters()">
+        <i class="bi bi-x-circle me-1"></i>Réinitialiser les filtres
+      </button>
     </div>
   </section>
 </div>
