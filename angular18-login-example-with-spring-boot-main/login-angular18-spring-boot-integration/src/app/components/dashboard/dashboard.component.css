@@ -2,62 +2,88 @@
 @import "bootstrap-icons/font/bootstrap-icons.css";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
-/* === Base Table Styling === */
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-top: 20px;
+/* Background and Container */
+:host {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('https://i.postimg.cc/TYg4B6v0/Capture-d-cran-2025-05-15-234036.jpg') no-repeat center center fixed;
+  background-size: cover;
+  overflow-y: auto;
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  min-height: calc(100vh - 40px);
+  width: 95%;
+  max-width: 1200px;
+}
+
+/* Logo Styling */
+.logo-image {
+  height: 180px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Button Styling */
+.btn-success {
+  background-color: #198754;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
   border-radius: 8px;
-  overflow: hidden;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-th, td {
-  border: 1px solid #ddd;
-  padding: 12px 16px;
-  text-align: left;
-  vertical-align: middle;
+.btn-success:hover {
+  background-color: #157347;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Header styling */
-th {
-  background-color: #f4f4f4;
-  font-weight: 600;
-  color: #333;
-  white-space: nowrap;
+.btn-success:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
-/* Zebra striping */
-tbody tr:nth-child(even) {
-  background-color: #fafafa;
+/* Right Column Buttons */
+.right-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-/* Hover effect on row */
-tbody tr:hover {
-  background-color: #eef5ff;
+.button-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
 }
 
-/* Round first and last cells */
-thead th:first-child,
-tbody td:first-child {
-  border-top-left-radius: 8px;
-}
-thead th:last-child,
-tbody td:last-child {
-  border-top-right-radius: 8px;
-}
-
-/* === Enhanced green border inputs === */
+/* Form Inputs */
 .green-border-input {
-  border: 2px solid #198754 !important;
-  border-radius: 8px !important;
-  padding: 8px 12px !important;
-  font-size: 14px !important;
-  transition: all 0.3s ease !important;
+  border: 2px solid #198754;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
+
 .green-border-input:focus {
-  border-color: #198754 !important;
-  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25) !important;
+  border-color: #198754;
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
 }
 .green-border-input.ng-valid {
   border-color: #198754 !important;
@@ -124,6 +150,7 @@ td.text-center {
   font-size: 16px;
   margin-bottom: 6px;
   display: block;
+
 }
 
 /* Filter Controls */
@@ -233,5 +260,25 @@ td.text-center {
   td .btn-warning {
     font-size: 13px;
     padding: 3px 8px;
+  }
+  .container {
+    padding: 15px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .col-md-4 {
+    margin-top: 20px;
+  }
+
+  .button-group {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .btn-success {
+    padding: 8px 12px;
+    font-size: 14px;
   }
 }

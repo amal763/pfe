@@ -6,9 +6,28 @@
   min-height: 100vh;
   background: #FFFFFF;
   padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  background: url('https://i.postimg.cc/TYg4B6v0/Capture-d-cran-2025-05-15-234036.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+}
+/* Logo styling */
+.logo-image {
+  height: 180px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
+/* If you need additional centering control */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
 .header {
   width: 100%;
   display: flex;
